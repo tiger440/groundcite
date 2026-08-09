@@ -2,7 +2,7 @@
 
 import pytest
 
-from trust_template.text import EmptyTextError, normalize_whitespace
+from groundcite.text import EmptyTextError, normalize_whitespace
 
 
 @pytest.mark.parametrize(

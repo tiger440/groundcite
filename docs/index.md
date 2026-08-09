@@ -1,35 +1,37 @@
-# python-template
+# groundcite
 
-The shared Python template for **the trust stack** — self-hostable,
-production-grade open source pieces. Every Python repo in the stack is
-instantiated from here, so the quality bars are defined once.
+**Grounded answers engine: hybrid retrieval, span-level citations,
+document-level permissions, evals built in. Self-hosted.**
 
-## What the template provides
+> Status: early. The package currently ships the placeholder module inherited
+> from the template; the retrieval pipeline lands next.
 
-| Area | Tooling |
+## Why
+
+A retrieval-augmented answer is only worth what its weakest stage is worth:
+
+$$P(\text{correct}) \approx P(\text{in corpus}) \cdot P(\text{retrieved}) \cdot P(\text{used}) \cdot P(\text{faithful})$$
+
+Four stages at 90% give a system at 66%. groundcite instruments each stage
+separately, so a wrong answer is traced to the stage that lost the information
+instead of blamed on "the model hallucinated".
+
+## Design commitments
+
+| Commitment | What it means |
 |---|---|
-| Packaging | `uv`, `src/` layout, hatchling, Python 3.12 / 3.13 |
-| Lint & format | `ruff` (line length 100, rules `E,F,W,I,N,UP,B,C4,SIM,RUF`) |
-| Types | `pyright` in strict mode |
-| Tests | `pytest` + `pytest-cov`, coverage gated at 85% |
-| CI | GitHub Actions, matrix 3.12/3.13, cancel-in-progress concurrency |
-| Releases | `release-please`, versions derived from Conventional Commits |
-| Docs | `mkdocs-material` + `mkdocstrings`, deployed to GitHub Pages |
-| Container | multi-stage Dockerfile, non-root runtime |
-| Community | Apache-2.0, DCO sign-off, security policy, issue and PR templates |
+| Hybrid retrieval | dense + lexical over Postgres 16, fused with RRF, then reranked |
+| Span-level citations | exact `(document, char_start, char_end)` preserved through the whole pipeline |
+| Permissions | ACL filters inside the index scan, recall measured per permission scope |
+| Evals built in | per-stage metrics, paired bootstrap CIs, frozen test set |
+| Self-hosted | Postgres is the only storage; no managed vector service |
+| Reproducible numbers | no published benchmark without a `make bench` target that regenerates it |
 
-## Quality bars
+## Where to go next
 
-These apply to every repo instantiated from the template:
-
-- Every public number is reproducible — no benchmark claim without `make bench`.
-- Boring tech by default; Postgres 16 is the only storage. Anything else needs an ADR.
-- Narrow and finished beats broad and half-done.
-- The quickstart stays under 5 minutes on a clean machine.
-- Code, docs and commits are in English, always.
-- A feature without tests is not done; new code ships typed.
-- Trunk-based flow: short-lived branch → PR → squash-merge, CI green.
+- [Quickstart](quickstart.md) — running checks in under 5 minutes.
+- [ML companion](ml-companion.md) — the maths behind every stage of the pipeline.
 
 ## API reference
 
-::: trust_template.text
+::: groundcite.text

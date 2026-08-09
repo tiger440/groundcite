@@ -10,7 +10,7 @@ older lines while the project is pre-1.0.
 **Do not open a public issue.**
 
 Report privately through GitHub Security Advisories:
-[Report a vulnerability](https://github.com/tiger440/python-template/security/advisories/new).
+[Report a vulnerability](https://github.com/tiger440/groundcite/security/advisories/new).
 
 Please include:
 

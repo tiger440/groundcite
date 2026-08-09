@@ -1,19 +1,36 @@
-# Project memory — python-template (the trust stack)
+# Project memory — groundcite (the trust stack)
 
 ## What this repo is
 
-The shared Python template for a three-project open source portfolio, "the trust
-stack" — self-hostable, production-grade pieces enterprises actually ask for:
+**groundcite** — a grounded answers engine: hybrid retrieval, span-level
+citations, document-level permissions, evals built in. Self-hosted. It is the
+first of three open source projects, "the trust stack" (with **cachette**, a
+correctness-first semantic cache in Rust, and **signoff**, a human sign-off
+layer for AI agents). Instantiated from `tiger440/python-template`, whose
+quality bars are kept below.
 
-- **groundcite** — grounded answers engine: hybrid retrieval, span-level
-  citations, document-level permissions, evals built in. (Python, built first)
-- **cachette** — correctness-first semantic cache for LLM APIs: verified hits,
-  measured precision, drop-in OpenAI-compatible proxy. (Rust, built second)
-- **signoff** — the human sign-off layer for AI agents: approvals, policies,
-  durable pause/resume, audit. Wraps any framework, MCP-native. (Python, third)
+### Design commitments specific to groundcite
 
-Every Python repo in the stack is instantiated from this template. The quality
-bars defined here apply to all of them.
+- **Storage is Postgres 16 only** — pgvector for dense, native full-text for
+  lexical. A second datastore requires an ADR that argues the numbers.
+- **Hybrid by construction**, not as an option: dense embeddings are blind to
+  negation, numbers, identifiers and rare entities; lexical covers exactly
+  those. Fuse with RRF first (no hyperparameter), rerank after.
+- **Citations are `(document_id, char_start, char_end)`**, exact through
+  parsing → cleaning → chunking → index. Offset correctness is an invariant
+  with unit tests: a span off by three characters looks like a lie.
+- **ACL filters run inside the index scan**, never as an application-level
+  post-filter, and recall is measured *per permission scope* — narrow-permission
+  users are exactly those a silent recall drop hurts most.
+- **Every stage of the funnel is measured separately**
+  (`in corpus → retrieved → used → faithful`); a wrong answer is attributed to
+  a stage, never to "the model hallucinated".
+- **No comparison without a paired bootstrap CI** and the count of discordant
+  queries. Dev set for iteration, frozen test set looked at 3–4 times total.
+- Latency target to hold: **p95 < 800 ms** end to end.
+
+`docs/ml-companion.md` derives the maths behind each of these; keep it amended
+when an eval loop contradicts it.
 
 ## Non-negotiables
 

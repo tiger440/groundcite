@@ -37,6 +37,6 @@ USER app
 
 # Placeholder: replace with the real readiness probe of your service.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-    CMD ["python", "-c", "import trust_template; trust_template.normalize_whitespace(' ok ')"]
+    CMD ["python", "-c", "import groundcite; groundcite.normalize_whitespace(' ok ')"]
 
-CMD ["python", "-c", "import trust_template; print(trust_template.normalize_whitespace('  hello   world  '))"]
+CMD ["python", "-c", "import groundcite; print(groundcite.normalize_whitespace('  hello   world  '))"]

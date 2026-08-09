@@ -1,5 +1,5 @@
 [project]
-name = "trust-template"
+name = "groundcite"
 version = "0.1.0"
 description = "Production-grade Python template: uv, ruff, pyright, pytest, release-please, mkdocs, OTel-ready"
 readme = "README.md"
@@ -18,16 +18,16 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/tiger440/python-template"
-Documentation = "https://tiger440.github.io/python-template/"
-Source = "https://github.com/tiger440/python-template"
+Homepage = "https://github.com/tiger440/groundcite"
+Documentation = "https://tiger440.github.io/groundcite/"
+Source = "https://github.com/tiger440/groundcite"
 
 [build-system]
 requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/trust_template"]
+packages = ["src/groundcite"]
 
 [tool.ruff]
 line-length = 100
@@ -38,18 +38,18 @@ src = ["src", "tests"]
 select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RUF"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["trust_template"]
+known-first-party = ["groundcite"]
 
 [tool.ruff.format]
 docstring-code-format = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q --cov=trust_template --cov-report=term-missing --cov-fail-under=85"
+addopts = "-q --cov=groundcite --cov-report=term-missing --cov-fail-under=85"
 
 [tool.coverage.run]
 branch = true
-source = ["trust_template"]
+source = ["groundcite"]
 
 [tool.coverage.report]
 show_missing = true

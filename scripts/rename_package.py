@@ -4,7 +4,7 @@ Usage::
 
     uv run python scripts/rename_package.py groundcite
 
-Renames ``src/trust_template`` to ``src/<new_package>`` and rewrites every
+Renames ``src/groundcite`` to ``src/<new_package>`` and rewrites every
 occurrence of the placeholder name (module form and distribution form) in the
 tracked text files of the repository.
 """
@@ -15,8 +15,8 @@ import re
 import sys
 from pathlib import Path
 
-OLD_PACKAGE = "trust_template"
-OLD_DISTRIBUTION = "trust-template"
+OLD_PACKAGE = "groundcite"
+OLD_DISTRIBUTION = "groundcite"
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -80,7 +80,7 @@ def rewrite(files: list[Path], package: str, distribution: str) -> int:
 
 
 def move_package(package: str) -> None:
-    """Move ``src/trust_template`` to ``src/<package>``.
+    """Move ``src/groundcite`` to ``src/<package>``.
 
     Raises:
         RenameError: If the source is missing or the destination already exists.
